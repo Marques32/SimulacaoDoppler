@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <title>Simulação</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Bootstrap core CSS -->
+  <link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css" rel="stylesheet">
+<link href="static/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+<div class="container">
+  <!--<a class="navbar-brand" href="{% url 'login' %}">Simulação</a>-->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+   <div class="collapse navbar-collapse" id="navbarResponsive">
+    <a class="navbar-brand" href="">Simulação</a>
+    <!--<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+      </li>
+    </ul>-->
+   </div>
+</div>
+</nav>
+<!-- Page Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="row">
+          <form class="form-inline mb-2 mt-2">
+            <label class="text-primary">Fonte</label>
+          <!--<input type="range" class="custom-range" id="velocidadeFonte" min="-20" max="20" value="0">-->
+            <input type="number" class="form-control col-2 col-md-1 ml-1 mr-1" id="velocidadeFonte" value="0" max="60">
+            <label class="text-info mr-5">m/s</label>
+
+            <label class="text-primary">Observador</label>
+            <input type="number" class="form-control col-2 col-md-1 ml-1 mr-1" id="velocidadeObservador" value="0" max="10">
+            <label class="text-info">m/s</label>
+
+          </form>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <canvas id="simulacao"></canvas>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4 col-md-2">
+            <button id="inicia" class="btn btn-success">Iniciar</button>
+          </div>
+          <div class="col-4 col-md-2">
+          <button id="pausa" class="btn btn-warning">Pausar</button>
+          </div>
+          <div class="col-4 col-md-2">
+            <button id="reinicia" class="btn btn-danger">Reiniciar</button>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-4 col-md-2">
+            <button onclick="liga()" class="btn btn-primary">Liga</button>
+          </div>
+          <div class="col-4 col-md-2">
+            <button onclick="desliga()" class="btn btn-primary">Desliga</button>
+          </div>
+          <div class="col-4 col-md-2">
+            <select id="escolheCaso" class="custom-select w-75">
+                <option value ="1" selected>Repouso</option>
+              <option value="2">Obs. Aprox.</option>
+              <option value="3">Obs. Afasta</option>
+              <option value="4">Fonte Aprox.</option>
+              <option value="5">Fonte Afasta</option>
+              <option value="6">Dois Aprox.</option>
+              <option value="7">Dois Afastam</option>
+            </select>
+          </div>
+        <!--<div class="col-4 col-md-2">
+          <i class="bi bi-caret-left" id="esquerda-regua"></i>
+          <button onclick="usaRegua()" class="btn btn-primary">Régua</button>
+          <i class="bi bi-caret-right" id="direita-regua"></i>
+        </div>-->
+        </div>
+      <!--<img id="regua" src="../../../media/fotos/regua.png" width="237" height="117">-->
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="static/jquery/jquery.slim.min.js"></script>
+  <script src="static/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/bootstrap/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pizzicato/0.6.4/Pizzicato.min.js"></script>
+  <script src="static/js/objetos.js"></script>
+  <script src="static/js/main.js"></script>
+
+</body>
+
+</html>
