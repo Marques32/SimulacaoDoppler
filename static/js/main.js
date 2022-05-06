@@ -1,4 +1,5 @@
-var canvas, contexto, altura, largura, frames = 0, fundo, imagemVeiculo, somAtivo=false, ondaAtiva=false, afastando=false, reguaAtiva=false, somAudivel=false;
+var canvas, contexto, altura, largura, frames = 0, fundo, imagemVeiculo, somAtivo=false, ondaAtiva=false, afastando=false, reguaAtiva=false, somAudivel=false,
+CASOS = {"REPOUSO":1,"OBS_APROXIMA":2,"OBS_AFASTA":3,"FONTE_APROXIMA":4,"FONTE_AFASTA":5,"DOIS_APROXIMA":6,"DOIS_AFASTA":7};
 
 function clique(){
 
@@ -66,22 +67,22 @@ function main(){
    escolheCaso.addEventListener('change',function(){
         contexto.clearRect(0,0,canvas.width,canvas.height);
 
-        var valor = parseInt(escolheCaso.options[escolheCaso.selectedIndex].value);
+        caso = parseInt(escolheCaso.options[escolheCaso.selectedIndex].value);
 
-        switch(valor){
-            case 1:
+        switch(caso){
+            case CASOS["REPOUSO"]:
                 colocaImagemFundo();
                 colocaImagemVeiculoDireita();
                 colocaImagemObservadorEsquerda();
             break;
-            case 2:
+            case CASOS["OBS_APROXIMA"]:
                 colocaImagemFundo();
                 colocaImagemVeiculoDireita();
                 colocaImagemObservadorEsquerda();
                 velocidadeObservador.readOnly = false;
                 velocidadeFonte.readOnly = true;
             break;
-            case 3:
+            case CASOS["OBS_AFASTA"]:
                 colocaImagemFundo();
                 colocaImagemVeiculoDireita();
                 colocaImagemObservadorDireita();
@@ -89,14 +90,14 @@ function main(){
                 velocidadeFonte.readOnly = true;
                 afastando = true;
             break;
-            case 4:
+            case CASOS["FONTE_APROXIMA"]:
                 colocaImagemFundo();
                 colocaImagemVeiculoDireita();
                 colocaImagemObservadorEsquerda();
                 velocidadeObservador.readOnly = true;
                 velocidadeFonte.readOnly = false;
             break;
-            case 5:
+            case CASOS["FONTE_AFASTA"]:
                 colocaImagemFundo();
                 colocaImagemVeiculoEsquerda();
                 veiculo.x=200;
@@ -106,14 +107,14 @@ function main(){
                 velocidadeFonte.readOnly = false;
                 afastando = true;
             break;
-            case 6:
+            case CASOS["DOIS_APROXIMA"]:
                 colocaImagemFundo();
                 colocaImagemVeiculoDireita();
                 colocaImagemObservadorEsquerda();
                 velocidadeObservador.readOnly = false;
                 velocidadeFonte.readOnly = false;
             break;
-            case 7:
+            case CASOS["DOIS_AFASTA"]:
                 colocaImagemFundo();
                 colocaImagemVeiculoEsquerda();
                 veiculo.x=200;
@@ -318,6 +319,7 @@ function desliga(){
 function calculaComprimentoPercebidoAproximando(){
     var velocidadeSom = frentesOndasMov.velocidade;
     var comprimentoPercebido = frentesOndasMov.comprimentoReal;
+
     if(veiculo.velocidade != 0 && observador.velocidade != 0){
 
     }else if(veiculo.velocidade != 0){
@@ -332,10 +334,17 @@ function calculaComprimentoPercebidoAproximando(){
 function calculaComprimentoPercebidoAfastando(){
     var velocidadeSom = frentesOndasMov.velocidade;
     var comprimentoPercebido = frentesOndasMov.comprimentoReal;
+    var velFonte = parseInt(velocidadeFonte.value);
+    //var velObservador = parseInt(velocidadeObservador.value);  
+
+    if(caso == CASOS["FONTE_APROXIMA"] || caso == CASOS["DOIS_APROXIMA"]){
+        velFonte = Math.abs(velFonte);
+    }
+
     if(veiculo.velocidade != 0 && observador.velocidade != 0){
 
     }else if(veiculo.velocidade != 0){
-        comprimentoPercebido = (velocidadeSom-parseInt(velocidadeFonte.value))/frentesOndasMov.frequencia;
+        comprimentoPercebido = (velocidadeSom+velFonte)/frentesOndasMov.frequencia;
     }else if(observador.velocidade != 0){
         //permanece o mesmo comprimento
     }
@@ -360,12 +369,26 @@ function calculaFrequenciaPercebida(){
 function calculaFrequenciaPercebidaAfastando(){
     var velocidadeSom = 343;
     var frequenciaPercebida = frentesOndasMov.frequencia;
+    var velFonte = parseInt(velocidadeFonte.value);
+    var velObservador = parseInt(velocidadeObservador.value);  
+
+    if(caso == CASOS["FONTE_APROXIMA"] || caso == CASOS["DOIS_APROXIMA"]){
+        velFonte = Math.abs(velFonte);
+    }
+
+    if(caso == CASOS["OBS_APROXIMA"] || caso == CASOS["DOIS_APROXIMA"]){
+        velObservador = -1*velObservador;
+    }
+
     if(veiculo.velocidade != 0 && observador.velocidade != 0){
-        frequenciaPercebida = ((velocidadeSom-parseInt(velocidadeObservador.value))/(velocidadeSom-parseInt(velocidadeFonte.value)))*frentesOndasMov.frequencia;
+        
+        frequenciaPercebida = ((velocidadeSom+velObservador)/(velocidadeSom+velFonte))*frentesOndasMov.frequencia;
     }else if(veiculo.velocidade != 0){
-        frequenciaPercebida = (velocidadeSom/(velocidadeSom-parseInt(velocidadeFonte.value)))*frentesOndasMov.frequencia;
+
+        frequenciaPercebida = (velocidadeSom/(velocidadeSom+velFonte))*frentesOndasMov.frequencia;
     }else if(observador.velocidade != 0){
-        frequenciaPercebida = ((velocidadeSom-parseInt(velocidadeObservador.value))/velocidadeSom)*frentesOndasMov.frequencia;
+
+        frequenciaPercebida = ((velocidadeSom+velObservador)/velocidadeSom)*frentesOndasMov.frequencia;
     }
 
     return frequenciaPercebida.toFixed(2);
