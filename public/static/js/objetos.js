@@ -113,7 +113,7 @@ frentesOndas = {
          }
 
          if(tam>0 && somAtivo==true){
-            if(afastando){
+            if(afastando && (caso==CASOS["FONTE_APROXIMA"] || caso==CASOS["OBS_APROXIMA"] || caso==CASOS["DOIS_APROXIMA"])){
                 sine.volume = calculaVolume();
             }else{
                 sineWave.volume = calculaVolume();
@@ -129,12 +129,15 @@ frentesOndas = {
             contexto.strokeStyle = "black";
             contexto.stroke();
          }
+         contexto.font = '12px serif';
+         contexto.fillText("s", 20, 440);
+         
          contexto.font = '20px serif';
-         contexto.fillText("vₛ = "+this.velocidade+"m/s", 10, 440);
+         contexto.fillText("v = "+this.velocidade+"m/s", 10, 440);
          contexto.fillText("fᵣ = "+this.frequencia+"Hz", 10, 470);
          contexto.fillText("λᵣ ="+this.comprimentoReal+"m", 10, 495);
-         contexto.fillText("fₐ = "+this.frequenciaPercebida+"Hz", 300, 470);
-         contexto.fillText("λₐ = "+this.comprimentoPercebido+"m", 300, 495);
+         contexto.fillText("fₐ = "+this.frequenciaPercebida+"Hz", canvas.width-150, 470);
+         contexto.fillText("λₐ = "+this.comprimentoPercebido+"m", canvas.width-150, 495);
       }
    },
 
