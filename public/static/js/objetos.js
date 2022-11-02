@@ -135,9 +135,9 @@ frentesOndas = {
          contexto.font = '20px serif';
          contexto.fillText("v = "+this.velocidade+"m/s", 10, 440);
          contexto.fillText("fᵣ = "+this.frequencia+"Hz", 10, 470);
-         contexto.fillText("λᵣ ="+this.comprimentoReal+"m", 10, 495);
+         //contexto.fillText("λᵣ ="+this.comprimentoReal+"m", 10, 495);
          contexto.fillText("fₐ = "+this.frequenciaPercebida+"Hz", canvas.width-150, 470);
-         contexto.fillText("λₐ = "+this.comprimentoPercebido+"m", canvas.width-150, 495);
+         //contexto.fillText("λₐ = "+this.comprimentoPercebido+"m", canvas.width-150, 495);
       }
    },
 
